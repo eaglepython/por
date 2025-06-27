@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joseph Bidias - Product Research Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #E60023;
+            --dark-red: #BD001F;
+            --cream: #FFFBF0;
+            --dark-gray: #111118;
+            --medium-gray: #5F5F5F;
+            --light-gray: #F7F7F7;
+            --gradient: linear-gradient(135deg, #E60023 0%, #BD001F 100%);
+            --shadow: 0 20px 40px rgba(230, 0, 35, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background: var(--cream);
+            overflow-x: hidden;
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loader-logo {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 251, 240, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(230, 0, 35, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-red);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--medium-gray);
+            margin-bottom: 3rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px rgba(230, 0, 35, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-red);
+            border: 2px solid var(--primary-red);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-red);
+            color: white;
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .floating-cards {
+            position: relative;
+            height: 500px;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            animation: float 6s ease-in-out infinite;
+            width: 240px;
+            min-height: 160px;
+        }
+
+        .floating-card:nth-child(1) {
+            top: 20px;
+            left: 20px;
+            animation-delay: 0s;
+        }
+
+        .floating-card:nth-child(2) {
+            top: 160px;
+            right: 20px;
+            animation-delay: 2s;
+        }
+
+        .floating-card:nth-child(3) {
+            bottom: 20px;
+            left: 80px;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            margin: 0 auto 1rem auto;
+            flex-shrink: 0;
+        }
+
+        /* Experience Section */
+        .experience {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .experience-grid {
+            display: grid;
+            gap: 3rem;
+        }
+
+        .experience-item {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: start;
+            padding: 3rem;
+            background: var(--light-gray);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .experience-meta {
+            text-align: center;
+        }
+
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+        }
+
+        .company-name {
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .role-title {
+            color: var(--primary-red);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .duration {
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+        }
+
+        .experience-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .achievement {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--medium-gray);
+        }
+
+        .achievement::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary-red);
+            font-weight: bold;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 6rem 0;
+            background: var(--cream);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .project-header {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .project-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-type {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-description {
+            color: var(--medium-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-tag {
+            background: var(--light-gray);
+            color: var(--primary-red);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-red);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--dark-red);
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 20px;
+            background: var(--light-gray);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .skill-category h3 {
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .skill-list {
+            list-style: none;
+            color: var(--medium-gray);
+        }
+
+        .skill-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Education & Certifications */
+        .education {
+            padding: 6rem 0;
+            background: var(--cream);
+        }
+
+        .education-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .education-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .education-section h3 {
+            color: var(--primary-red);
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+        }
+
+        .degree-item, .cert-item {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .degree-item:last-child, .cert-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .degree-title, .cert-title {
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .degree-school, .cert-org {
+            color: var(--medium-gray);
+            font-style: italic;
+        }
+
+        .cert-link {
+            color: var(--primary-red);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .cert-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 0;
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .contact-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: white;
+            color: var(--primary-red);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .experience-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .education-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Advanced Product Design Interactions */
+        .user-journey-viz {
+            position: relative;
+            background: linear-gradient(135deg, rgba(230, 0, 35, 0.05), rgba(189, 0, 31, 0.05));
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .journey-step {
+            display: inline-block;
+            background: white;
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .journey-step:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(230, 0, 35, 0.2);
+            z-index: 10;
+        }
+
+        .journey-step::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-red);
+            font-weight: bold;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .journey-step:hover::after {
+            opacity: 1;
+            right: -25px;
+        }
+
+        /* Interactive Data Visualization */
+        .data-insight-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .data-insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(230, 0, 35, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .data-insight-card:hover::before {
+            left: 100%;
+        }
+
+        .data-insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        /* Research Methodology Showcase */
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .method-card {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .method-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.6s ease;
+        }
+
+        .method-card:hover::before {
+            transform: scale(1);
+        }
+
+        .method-card:hover {
+            transform: translateY(-10px) rotateY(10deg);
+            box-shadow: 0 20px 40px rgba(230, 0, 35, 0.3);
+        }
+
+        /* Advanced Scroll Animations */
+        .parallax-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .parallax-bg {
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: linear-gradient(45deg, 
+                rgba(230, 0, 35, 0.05) 0%, 
+                rgba(189, 0, 31, 0.05) 25%, 
+                transparent 50%, 
+                rgba(230, 0, 35, 0.05) 75%, 
+                rgba(189, 0, 31, 0.05) 100%);
+            background-size: 200px 200px;
+            animation: parallaxMove 20s linear infinite;
+        }
+
+        @keyframes parallaxMove {
+            0% { transform: translateX(-50px) translateY(-50px); }
+            100% { transform: translateX(50px) translateY(50px); }
+        }
+
+        /* Interactive Skills Radar */
+        .skills-radar {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--primary-red) 0deg 72deg,
+                var(--dark-red) 72deg 144deg,
+                var(--primary-red) 144deg 216deg,
+                var(--dark-red) 216deg 288deg,
+                var(--primary-red) 288deg 360deg
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.6s ease;
+            cursor: pointer;
+        }
+
+        .skills-radar::before {
+            content: '';
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .skills-radar:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 20px 40px rgba(230, 0, 35, 0.3);
+        }
+
+        /* Micro-interactions for buttons */
+        .btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Glassmorphism Effects */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Advanced Typography Animations */
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid var(--primary-red);
+            white-space: nowrap;
+            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--primary-red); }
+        }
+
+        /* Product Research Showcase Elements */
+        .research-insight {
+            background: linear-gradient(135deg, rgba(230, 0, 35, 0.1), rgba(189, 0, 31, 0.05));
+            border-left: 4px solid var(--primary-red);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 15px 15px 0;
+            position: relative;
+            transform: translateX(-20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .research-insight.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .research-insight::before {
+            content: '💡';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Interactive Hover States for Experience Cards */
+        .experience-item {
+            position: relative;
+        }
+
+        .experience-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(230, 0, 35, 0.05), rgba(189, 0, 31, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .experience-item:hover::after {
+            opacity: 1;
+        }
+
+        /* Advanced Loading States */
+        .skeleton-loader {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Responsive Product Design Considerations */
+        @media (max-width: 768px) {
+            .user-journey-viz {
+                padding: 1rem;
+            }
+            
+            .journey-step {
+                display: block;
+                margin: 0.5rem 0;
+            }
+            
+            .methodology-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-radar {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        /* Pinterest Theme Accents */
+        .pinterest-accent {
+            position: relative;
+        }
+
+        .pinterest-accent::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: var(--gradient);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .pinterest-accent:hover::before {
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">Joseph Bidias</div>
+            <p>Product Research Portfolio</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">JB</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Joseph Bidias</h1>
+                <p class="hero-subtitle">Data Analytics → Product Research</p>
+                <p class="hero-description">
+                    Transitioning 7+ years of analytical expertise into product research. My background in data science 
+                    and analytics has taught me to identify patterns, understand user behaviors, and translate complex 
+                    insights into actionable recommendations. Now I'm channeling these skills into product research 
+                    to create user-centered experiences that drive business impact through deep user understanding.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#experience" class="btn btn-primary">
+                        <i class="fas fa-user-research"></i>
+                        View My Journey
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i>
+                        Let's Connect
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-cards">
+                    <div class="floating-card">
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 style="color: var(--dark-gray); font-size: 1.1rem; margin-bottom: 0.5rem; text-align: center;">User Behavior Analysis</h4>
+                        <p style="color: var(--medium-gray); font-size: 0.9rem; text-align: center; line-height: 1.4;">Pattern identification and insight generation</p>
+                    </div>
+                    <div class="floating-card">
+                        <div class="card-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <h4 style="color: var(--dark-gray); font-size: 1.1rem; margin-bottom: 0.5rem; text-align: center;">Cross-Functional Collaboration</h4>
+                        <p style="color: var(--medium-gray); font-size: 0.9rem; text-align: center; line-height: 1.4;">Bridging insights across teams</p>
+                    </div>
+                    <div class="floating-card">
+                        <div class="card-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4 style="color: var(--dark-gray); font-size: 1.1rem; margin-bottom: 0.5rem; text-align: center;">Healthcare Impact</h4>
+                        <p style="color: var(--medium-gray); font-size: 0.9rem; text-align: center; line-height: 1.4;">20% reduction in patient churn</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Methodology Showcase -->
+    <section class="methodology-showcase parallax-section" style="padding: 6rem 0; background: var(--cream); position: relative;">
+        <div class="parallax-bg"></div>
+        <div class="container" style="position: relative; z-index: 2;">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Product Research Approach</h2>
+                <p class="section-subtitle">
+                    How I translate data analytics expertise into user-centered research methodologies
+                </p>
+            </div>
+            
+            <div class="user-journey-viz fade-in">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: var(--dark-gray);">From Data to User Insights</h3>
+                <div style="text-align: center;">
+                    <div class="journey-step">Data Collection</div>
+                    <div class="journey-step">Pattern Recognition</div>
+                    <div class="journey-step">User Behavior Analysis</div>
+                    <div class="journey-step">Insight Generation</div>
+                    <div class="journey-step">Actionable Recommendations</div>
+                </div>
+            </div>
+
+            <div class="methodology-grid fade-in">
+                <div class="method-card">
+                    <h4>Quantitative Analysis</h4>
+                    <p>Behavioral metrics & usage patterns</p>
+                </div>
+                <div class="method-card">
+                    <h4>Qualitative Insights</h4>
+                    <p>User needs & pain point identification</p>
+                </div>
+                <div class="method-card">
+                    <h4>Cross-functional Collaboration</h4>
+                    <p>Stakeholder alignment & communication</p>
+                </div>
+                <div class="method-card">
+                    <h4>Impact Measurement</h4>
+                    <p>Success metrics & outcome tracking</p>
+                </div>
+            </div>
+
+            <div class="research-insight fade-in">
+                <h4>Key Research Philosophy</h4>
+                <p>My analytical background uniquely positions me to bridge the gap between data-driven insights and human-centered design. I understand how to extract meaningful patterns from complex datasets while never losing sight of the real users behind the numbers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Relevant Experience</h2>
+                <p class="section-subtitle">
+                    My journey from analyzing data to understanding users - always with people at the center
+                </p>
+            </div>
+            <div class="experience-grid">
+                <div class="experience-item fade-in pinterest-accent">
+                    <div class="experience-meta">
+                        <div class="company-logo">V</div>
+                        <div class="company-name">Verizon</div>
+                        <div class="role-title">Data Analyst</div>
+                        <div class="duration">June 2022 - Feb 2025</div>
+                    </div>
+                    <div class="experience-content">
+                        <h3>User Behavior Analysis at Scale</h3>
+                        <div class="data-insight-card">
+                            <strong>Product Research Translation:</strong> Applied statistical analysis to understand user engagement patterns across digital touchpoints, identifying key friction points in the customer journey that informed product optimization strategies.
+                        </div>
+                        <div class="achievement">Analyzed user behavior patterns across digital platforms to understand customer needs and optimize network performance experiences</div>
+                        <div class="achievement">Collaborated closely with product teams to translate user data insights into product improvements and feature recommendations</div>
+                        <div class="achievement">Developed user journey visualizations and presented findings to cross-functional stakeholders including product managers and engineering teams</div>
+                        <div class="achievement">Built automated reporting systems that provided real-time insights into user engagement patterns and pain points</div>
+                        <div class="achievement">Communicated technical findings to non-technical business stakeholders through clear visualizations and actionable recommendations</div>
+                    </div>
+                </div>
+
+                <div class="experience-item fade-in pinterest-accent">
+                    <div class="experience-meta">
+                        <div class="company-logo">H</div>
+                        <div class="company-name">Texas Health & Human Services</div>
+                        <div class="role-title">Data Scientist/Biomedical Researcher</div>
+                        <div class="duration">Feb 2020 - June 2022</div>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Healthcare User Journey Research</h3>
+                        <div class="data-insight-card">
+                            <strong>Research Impact:</strong> Leveraged data science methodologies to map patient touchpoints and identify behavioral patterns that led to a 20% reduction in churn through targeted intervention strategies.
+                        </div>
+                        <div class="achievement">Researched patient behaviors and healthcare journeys to identify opportunities for improving care delivery and reducing patient dropout</div>
+                        <div class="achievement">Collaborated intensively with clinicians and care teams to understand user needs and align research insights with healthcare quality objectives</div>
+                        <div class="achievement">Reduced patient churn by 20% through user behavior analysis and implementation of user-centered intervention systems</div>
+                        <div class="achievement">Developed user-facing dashboards that helped frontline staff understand patient risk patterns and take proactive action</div>
+                        <div class="achievement">Translated complex user insights into presentations and reports for clinical and administrative stakeholders</div>
+                    </div>
+                </div>
+
+                <div class="experience-item fade-in pinterest-accent">
+                    <div class="experience-meta">
+                        <div class="company-logo">U</div>
+                        <div class="company-name">University of Florida</div>
+                        <div class="role-title">Fellow Researcher</div>
+                        <div class="duration">Jan 2017 - Apr 2020</div>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Medical Professional User Studies</h3>
+                        <div class="achievement">Conducted user studies to understand how medical professionals interacted with diagnostic tools and identified usability improvements</div>
+                        <div class="achievement">Applied research methodologies to understand user needs in high-stakes healthcare environments</div>
+                        <div class="achievement">Translated complex user behavior analysis into presentations and reports for academic and federal partners</div>
+                        <div class="achievement">Collaborated with diverse stakeholder groups to ensure research findings aligned with real-world user requirements</div>
+                    </div>
+                </div>
+
+                <div class="experience-item fade-in pinterest-accent">
+                    <div class="experience-meta">
+                        <div class="company-logo">A</div>
+                        <div class="company-name">Apple Inc.</div>
+                        <div class="role-title">User Engagement Analyst</div>
+                        <div class="duration">Sept 2014 - Dec 2017</div>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Global Customer Behavior Insights</h3>
+                        <div class="achievement">Analyzed customer behavior patterns to understand product usage and inform marketing strategy and product development decisions</div>
+                        <div class="achievement">Built user insight pipelines that provided real-time understanding of customer engagement across global user bases</div>
+                        <div class="achievement">Supported product teams with user behavior dashboards and insights that informed product strategy decisions</div>
+                        <div class="achievement">Collaborated with marketing and product teams to translate user data into actionable business recommendations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Key Research Projects</h2>
+                <p class="section-subtitle">
+                    Real-world applications of user research principles to solve complex problems
+                </p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card fade-in">
+                    <div class="project-header">
+                        <div class="project-icon">🏥</div>
+                        <h3 class="project-title">Healthcare User Journey Optimization</h3>
+                        <p class="project-type">Patient Experience Research</p>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description">
+                            Analyzed patient interaction patterns to understand barriers to care engagement. 
+                            Identified key friction points in the patient experience and developed recommendations 
+                            for improvement. Collaborated with care teams to implement user-centered solutions 
+                            that improved patient outcomes.
+                        </p>
+                        <div class="project-skills">
+                            <span class="skill-tag">User Journey Mapping</span>
+                            <span class="skill-tag">Behavior Analysis</span>
+                            <span class="skill-tag">Stakeholder Collaboration</span>
+                            <span class="skill-tag">Intervention Design</span>
+                        </div>
+                        <a href="https://github.com/eaglepython" class="project-link">
+                            <i class="fab fa-github"></i>
+                            View on GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-header">
+                        <div class="project-icon">📡</div>
+                        <h3 class="project-title">Customer Experience Analysis for Network Optimization</h3>
+                        <p class="project-type">Telecommunications User Research</p>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description">
+                            Studied user behavior patterns to understand how network performance impacts customer 
+                            satisfaction. Developed insights that informed product decisions about network 
+                            infrastructure improvements. Created user journey maps that helped product teams 
+                            prioritize feature development.
+                        </p>
+                        <div class="project-skills">
+                            <span class="skill-tag">User Journey Mapping</span>
+                            <span class="skill-tag">Product Strategy</span>
+                            <span class="skill-tag">Performance Analysis</span>
+                            <span class="skill-tag">Cross-functional Collaboration</span>
+                        </div>
+                        <a href="https://github.com/eaglepython" class="project-link">
+                            <i class="fab fa-github"></i>
+                            View Portfolio
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-header">
+                        <div class="project-icon">🔬</div>
+                        <h3 class="project-title">Medical Professional Usability Research</h3>
+                        <p class="project-type">Healthcare UX Research</p>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description">
+                            Conducted research on how healthcare professionals interact with diagnostic tools. 
+                            Identified usability challenges and developed recommendations for improving user 
+                            experience. Presented findings to stakeholders to inform product design decisions.
+                        </p>
+                        <div class="project-skills">
+                            <span class="skill-tag">Usability Testing</span>
+                            <span class="skill-tag">User Studies</span>
+                            <span class="skill-tag">Design Recommendations</span>
+                            <span class="skill-tag">Stakeholder Presentation</span>
+                        </div>
+                        <a href="https://github.com/eaglepython" class="project-link">
+                            <i class="fab fa-github"></i>
+                            View Research
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Core Competencies</h2>
+                <p class="section-subtitle">
+                    Skills that translate perfectly to product research at Pinterest
+                </p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-search"></i> Research & Analysis</h3>
+                    <div class="skills-radar"></div>
+                    <ul class="skill-list">
+                        <li>User behavior analysis and pattern identification</li>
+                        <li>Data-driven insights and storytelling</li>
+                        <li>Cross-functional collaboration and stakeholder communication</li>
+                        <li>Problem-solving and critical thinking</li>
+                    </ul>
+                </div>
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-tools"></i> Methods & Tools</h3>
+                    <ul class="skill-list">
+                        <li>Quantitative analysis with Python, SQL</li>
+                        <li>Dashboard creation (Tableau, Power BI) for stakeholder insights</li>
+                        <li>Statistical analysis and trend identification</li>
+                        <li>Documentation and presentation of findings</li>
+                    </ul>
+                </div>
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-industry"></i> Industry Experience</h3>
+                    <ul class="skill-list">
+                        <li>Healthcare user experience and patient journey mapping</li>
+                        <li>Technology product optimization and user engagement</li>
+                        <li>Telecommunications customer behavior analysis</li>
+                        <li>Cross-functional team collaboration</li>
+                    </ul>
+                </div>
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-lightbulb"></i> Research Mindset</h3>
+                    <ul class="skill-list">
+                        <li>Understanding user needs and pain points</li>
+                        <li>Translating insights into actionable recommendations</li>
+                        <li>Stakeholder communication and alignment</li>
+                        <li>User-centered design thinking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Certifications Section -->
+    <section class="education" id="education">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Education & Professional Development</h2>
+                <p class="section-subtitle">
+                    Academic foundation and continuous learning in user research and analytics
+                </p>
+            </div>
+            <div class="education-grid fade-in">
+                <div class="education-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <div class="degree-item">
+                        <div class="degree-title">Master of Science – Financial Engineering</div>
+                        <div class="degree-school">WorldQuant University — March 2025</div>
+                        <p style="color: var(--medium-gray); margin-top: 0.5rem; font-size: 0.9rem;">Analytics Specialization</p>
+                    </div>
+                    <div class="degree-item">
+                        <div class="degree-title">Bachelor of Science – Biomedical Engineering</div>
+                        <div class="degree-school">University of Cameron — 2013</div>
+                    </div>
+                </div>
+                
+                <div class="education-section">
+                    <h3><i class="fas fa-certificate"></i> Professional Development</h3>
+                    <div class="cert-item">
+                        <div class="cert-title">
+                            <a href="https://certificates.multiverse.io/f8b43dcc-a604-4923-a9d0-eca73f9ec735" class="cert-link">
+                                Advanced Data Analytics Apprenticeship
+                            </a>
+                        </div>
+                        <div class="cert-org">Multiverse (2022)</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title">AI Research Engineer Certificate</div>
+                        <div class="cert-org">2025</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title">Project Manager Certificate</div>
+                        <div class="cert-org">Microsoft (2022)</div>
+                        <p style="color: var(--medium-gray); margin-top: 0.5rem; font-size: 0.9rem;">Cross-functional collaboration and stakeholder management</p>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title">Guest Speaker: Responsible AI in Regulated Industries</div>
+                        <div class="cert-org">2024 AI in Healthcare Summit</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title">Open-Source Contributor</div>
+                        <div class="cert-org">Hugging Face & LangChain projects</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-content fade-in">
+                <h2 class="contact-title">Ready for Pinterest</h2>
+                <p class="contact-subtitle">
+                    Let's discuss how my user research experience can contribute to Pinterest's mission
+                </p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>rodabeck777@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(214) 886-3785</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Dallas, TX</span>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/eaglepython" class="social-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/josephbidias" class="social-link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="mailto:rodabeck777@gmail.com" class="social-link">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+                    <p style="opacity: 0.8; font-size: 0.9rem;">
+                        <i class="fas fa-flag-usa"></i> U.S. Citizen | Eligible for Public Trust Clearance<br>
+                        <i class="fas fa-award"></i> AI2030 Fellow for Responsible AI in Emergent Technologies<br>
+                        <i class="fas fa-trophy"></i> Robert Pittman Fellowship in AI for Health Systems (2018)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Loading Animation
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                }, 500);
+            }, 1500);
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+
+
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Floating Cards Animation Enhancement
+        document.querySelectorAll('.floating-card').forEach((card, index) => {
+            card.style.animationDelay = `${index * 2}s`;
+            
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.05)';
+                this.style.boxShadow = '0 30px 60px rgba(230, 0, 35, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            });
+        });
+
+        // Project Cards Hover Effects
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) rotateY(5deg)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // Contact Form Interaction
+        document.querySelectorAll('.contact-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const content = this.querySelector('span').textContent;
+                if (content.includes('@')) {
+                    window.location.href = `mailto:${content}`;
+                } else if (content.includes('(')) {
+                    window.location.href = `tel:${content}`;
+                }
+            });
+        });
+
+        // Enhanced Certificate Links
+        document.querySelectorAll('.cert-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Allow normal link behavior but add visual feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Advanced Product Design Interactions
+        
+        // Journey Step Interactions
+        document.querySelectorAll('.journey-step').forEach((step, index) => {
+            step.addEventListener('mouseenter', function() {
+                // Highlight the current step and subsequent ones
+                document.querySelectorAll('.journey-step').forEach((s, i) => {
+                    if (i <= index) {
+                        s.style.background = 'linear-gradient(135deg, var(--primary-red), var(--dark-red))';
+                        s.style.color = 'white';
+                        s.style.transform = 'translateY(-8px) scale(1.05)';
+                    }
+                });
+            });
+            
+            step.addEventListener('mouseleave', function() {
+                // Reset all steps
+                document.querySelectorAll('.journey-step').forEach(s => {
+                    s.style.background = 'white';
+                    s.style.color = 'var(--dark-gray)';
+                    s.style.transform = '';
+                });
+            });
+        });
+
+        // Method Card 3D Effects
+        document.querySelectorAll('.method-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // Data Insight Card Progressive Enhancement
+        document.querySelectorAll('.data-insight-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Add ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                ripple.style.background = 'rgba(230, 0, 35, 0.3)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.left = '50%';
+                ripple.style.top = '50%';
+                ripple.style.pointerEvents = 'none';
+                
+                this.appendChild(ripple);
+                
+                ripple.animate([
+                    { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
+                    { transform: 'translate(-50%, -50%) scale(20)', opacity: 0 }
+                ], {
+                    duration: 600,
+                    easing: 'ease-out'
+                }).onfinish = () => ripple.remove();
+            });
+        });
+
+        // Skills Radar Interaction
+        document.querySelectorAll('.skills-radar').forEach(radar => {
+            let isAnimating = false;
+            
+            radar.addEventListener('click', function() {
+                if (!isAnimating) {
+                    isAnimating = true;
+                    this.style.animation = 'pulse 1s ease-in-out';
+                    
+                    setTimeout(() => {
+                        this.style.animation = '';
+                        isAnimating = false;
+                    }, 1000);
+                }
+            });
+        });
+
+        // Advanced Scroll-triggered Animations
+        const advancedObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('research-insight')) {
+                        // Stagger animation for research insights
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, Math.random() * 300);
+                    }
+                    
+                    if (entry.target.classList.contains('methodology-grid')) {
+                        // Animate method cards sequentially
+                        const cards = entry.target.querySelectorAll('.method-card');
+                        cards.forEach((card, index) => {
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, index * 150);
+                        });
+                    }
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        // Observe new elements
+        document.querySelectorAll('.research-insight, .methodology-grid').forEach(el => {
+            advancedObserver.observe(el);
+        });
+
+        // Initialize method cards for animation
+        document.querySelectorAll('.method-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+
+        // Enhanced Button Interactions
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mousedown', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const ripple = this.querySelector('::before') || document.createElement('div');
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+            });
+        });
+
+        // Parallax Effect for Background
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallaxBgs = document.querySelectorAll('.parallax-bg');
+            
+            parallaxBgs.forEach(bg => {
+                const speed = 0.5;
+                bg.style.transform = `translate3d(0, ${scrolled * speed}px, 0)`;
+            });
+        });
+
+        // Progressive Enhancement for Touch Devices
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.journey-step, .method-card').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+                
+                element.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        }
+
+        // Performance Optimization: Debounced Scroll Handler
+        let ticking = false;
+        
+        function updateOnScroll() {
+            // Navbar and parallax updates
+            const navbar = document.getElementById('navbar');
+            const scrolled = window.pageYOffset;
+            
+            if (scrolled > 100) {
+                navbar.style.background = 'rgba(255, 251, 240, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(230, 0, 35, 0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 251, 240, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+            
+            ticking = false;
+        }
+        
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateOnScroll);
+                ticking = true;
+            }
+        }
+        
+        window.addEventListener('scroll', requestTick);
+    </script>
+</body>
+</html>
